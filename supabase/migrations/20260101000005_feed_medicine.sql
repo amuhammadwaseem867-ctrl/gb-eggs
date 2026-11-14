@@ -354,7 +354,13 @@ declare
 begin
   if coalesce(trim(p_reason), '') = '' then raise exception 'A reason is required'; end if;
 
-  if p_kind = 'feed_purchase' then
+  if p_kind = 'egg_damage' then
+    perform public.require_perm('inventory', 'delete');
+    update public.egg_damages set status = 'void', void_reason = p_reason, voided_at = now(), voided_by = auth.uid()
+     where id = p_id and status = 'posted' and source <> 'return';
+    if not found then raise exception 'Record not found, already void, or part of a sales return'; end if;
+
+  elsif p_kind = 'feed_purchase' then
     perform public.require_perm('feed', 'delete');
     select * into v_fp from public.feed_purchases where id = p_id and status = 'posted' for update;
     if not found then raise exception 'Record not found or already void'; end if;
