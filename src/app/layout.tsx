@@ -18,7 +18,7 @@ export const viewport: Viewport = {
   themeColor: "#121a33",
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${inter.variable} ${jakarta.variable} ${mono.variable} h-full antialiased`} suppressHydrationWarning>
       <body className="min-h-full bg-background">
