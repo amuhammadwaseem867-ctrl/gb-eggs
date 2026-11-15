@@ -35,7 +35,7 @@ export function Topbar({ items, companyName, user, today, signOutLabel }: Props)
             <Menu />
           </Button>
         </SheetTrigger>
-        <SheetContent side="left" className="w-72 gap-0 border-0 glass-dark p-0 text-sidebar-foreground">
+        <SheetContent side="left" surface="dark" className="w-72 gap-0 border-0 p-0 [&>button]:text-sidebar-foreground">
           <SheetHeader className="flex-row items-center gap-3 border-b border-sidebar-border px-4 py-4">
             <BrandMark />
             <SheetTitle className="text-sidebar-accent-foreground">
