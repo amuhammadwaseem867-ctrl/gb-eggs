@@ -1,4 +1,4 @@
-import { AlertTriangle, CalendarClock, Pill, Syringe } from "lucide-react";
+import { AlertTriangle, CalendarClock, Pill, Syringe } from "@/components/icons";
 import { PageHeader } from "@/components/shared/page-header";
 import { DataTable, type Column } from "@/components/shared/data-table";
 import { FilterSelect, LinkTabs, Toolbar } from "@/components/shared/table-controls";

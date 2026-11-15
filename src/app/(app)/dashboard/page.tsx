@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { AlertTriangle, Bird, Boxes, CircleDollarSign, Egg, HandCoins, PackageMinus, ReceiptText, ShoppingCart, Skull, Syringe, TrendingUp, Users, Wallet } from "lucide-react";
+import { AlertTriangle, Bird, Boxes, CircleDollarSign, Egg, HandCoins, PackageMinus, ReceiptText, ShoppingCart, Skull, Syringe, TrendingUp, Users, Wallet } from "@/components/icons";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { StatCard } from "@/components/shared/stat-card";
@@ -34,7 +34,7 @@ export default async function DashboardPage() {
 
   if (summaryRes.error) {
     return (
-      <div className="rounded-xl border border-destructive/30 bg-destructive/5 p-6 text-sm text-destructive">
+      <div className="rounded-2xl glass p-6 text-sm text-destructive">
         Could not load the dashboard: {summaryRes.error.message}
       </div>
     );
@@ -60,10 +60,10 @@ export default async function DashboardPage() {
         <StatCard label={t(dict, "dash.liveBirds")} value={formatNumber(s.live_birds)} sub={`${s.active_batches} active batches`} icon={Bird} tone="primary" />
         <StatCard label={t(dict, "dash.collected")} value={formatNumber(s.eggs_collected_today)} sub={s.production_rate_today ? `${formatPercent(s.production_rate_today)} production rate` : "No collection yet today"} icon={Egg} tone="primary" />
         <StatCard label={t(dict, "dash.purchased")} value={formatNumber(s.eggs_purchased_today)} sub={`${formatNumber(Math.floor(s.eggs_purchased_today / tray))} trays`} icon={ShoppingCart} tone="info" />
-        <StatCard label={t(dict, "dash.sold")} value={formatNumber(s.eggs_sold_today)} sub={`${formatNumber(Math.floor(s.eggs_sold_today / tray))} trays`} icon={ReceiptText} tone="info" />
-        <StatCard label={t(dict, "dash.stock")} value={formatNumber(s.available_stock)} sub={formatEggs(s.available_stock, tray).split("· ")[1]} icon={Boxes} />
+        <StatCard label={t(dict, "dash.sold")} value={formatNumber(s.eggs_sold_today)} sub={`${formatNumber(Math.floor(s.eggs_sold_today / tray))} trays`} icon={ReceiptText} tone="violet" />
+        <StatCard label={t(dict, "dash.stock")} value={formatNumber(s.available_stock)} sub={formatEggs(s.available_stock, tray).split("· ")[1]} icon={Boxes} tone="warning" />
         <StatCard label={t(dict, "dash.broken")} value={formatNumber(s.broken_today)} sub={s.eggs_collected_today ? `${formatPercent((s.broken_today / s.eggs_collected_today) * 100)} of collection` : undefined} icon={PackageMinus} tone="warning" />
-        <StatCard label={t(dict, "dash.customers")} value={formatNumber(s.total_customers)} sub="Active accounts" icon={Users} />
+        <StatCard label={t(dict, "dash.customers")} value={formatNumber(s.total_customers)} sub="Active accounts" icon={Users} tone="info" />
         {s.outstanding_receivables !== null ? (
           <StatCard label={t(dict, "dash.receivables")} value={formatCompactCurrency(s.outstanding_receivables)} sub={s.outstanding_payables !== null ? `Payables ${formatCompactCurrency(s.outstanding_payables)}` : undefined} icon={HandCoins} tone="warning" />
         ) : null}
@@ -78,7 +78,7 @@ export default async function DashboardPage() {
               icon={CircleDollarSign}
               tone={Number(s.net_profit_today) < 0 ? "danger" : "primary"}
             />
-            <StatCard label="Cash & bank balance" value={formatCompactCurrency(s.cash_balance)} sub="All active accounts" icon={Wallet} />
+            <StatCard label="Cash & bank balance" value={formatCompactCurrency(s.cash_balance)} sub="All active accounts" icon={Wallet} tone="violet" />
           </>
         ) : null}
       </section>
@@ -233,9 +233,9 @@ export default async function DashboardPage() {
 
 function AlertRow({ icon: Icon, title, detail, href, danger }: { icon: typeof Egg; title: string; detail: string; href: string; danger?: boolean }) {
   return (
-    <Link href={href} className="flex items-start gap-3 rounded-lg border p-2.5 transition-colors hover:bg-muted/60">
-      <span className={cn("mt-0.5 flex size-7 shrink-0 items-center justify-center rounded-md", danger ? "bg-destructive/10 text-destructive" : "bg-warning/15 text-[oklch(0.55_0.13_70)]")}>
-        <Icon className="size-3.5" />
+    <Link href={href} className="flex items-start gap-3 rounded-xl border border-white/70 bg-white/45 p-2.5 transition-all hover:-translate-y-px hover:bg-white/80">
+      <span className={cn("flex size-8 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br text-white", danger ? "from-[oklch(0.72_0.18_15)] to-[oklch(0.58_0.21_355)]" : "from-[oklch(0.86_0.15_85)] to-[oklch(0.72_0.17_55)]")}>
+        <Icon className="size-4" />
       </span>
       <span className="min-w-0">
         <span className="block truncate text-sm font-medium">{title}</span>

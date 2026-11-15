@@ -1,4 +1,4 @@
-import { Ban, Trash2 } from "lucide-react";
+import { Ban, Trash2 } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { ConfirmAction } from "@/components/shared/confirm-action";
 

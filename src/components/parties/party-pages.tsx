@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowLeft, HandCoins, Receipt, Users, Wallet } from "lucide-react";
+import { ArrowLeft, HandCoins, Receipt, Users, Wallet } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { TableCell, TableRow } from "@/components/ui/table";

@@ -1,4 +1,4 @@
-import { Banknote, HandCoins, IdCard, UserCheck } from "lucide-react";
+import { Banknote, HandCoins, IdCard, UserCheck } from "@/components/icons";
 import { PageHeader } from "@/components/shared/page-header";
 import { DataTable, type Column } from "@/components/shared/data-table";
 import { FilterSelect, LinkTabs, SearchInput, Toolbar } from "@/components/shared/table-controls";

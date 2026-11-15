@@ -10,7 +10,7 @@ const compact = (n: number) => (Math.abs(n) >= 100000 ? `${(n / 100000).toFixed(
 function ChartTooltip({ active, payload, label, money }: { active?: boolean; payload?: { name: string; value: number; color: string }[]; label?: string; money?: boolean }) {
   if (!active || !payload?.length) return null;
   return (
-    <div className="rounded-lg border bg-popover px-3 py-2 text-xs shadow-md">
+    <div className="rounded-xl glass-strong px-3 py-2 text-xs">
       {label ? <p className="mb-1 font-medium">{/^\d{4}-/.test(label) ? shortDate(label) : label}</p> : null}
       {payload.map((p) => (
         <p key={p.name} className="flex items-center gap-2">

@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { usePathname } from "next/navigation";
-import { LogOut, Menu, UserRound } from "lucide-react";
+import { CalendarDays, LogOut, Menu, UserRound } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
@@ -26,14 +26,15 @@ export function Topbar({ items, companyName, user, today, signOutLabel }: Props)
   const current = items.find((i) => pathname === i.href || pathname.startsWith(`${i.href}/`));
 
   return (
-    <header className="no-print sticky top-0 z-30 flex h-16 items-center gap-3 border-b bg-background/85 px-4 backdrop-blur supports-[backdrop-filter]:bg-background/70 sm:px-6">
+    <header className="no-print sticky top-0 z-30 px-3 pt-3 sm:px-4 lg:px-6">
+      <div className="flex h-16 items-center gap-3 rounded-2xl glass px-3 sm:px-4">
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetTrigger asChild>
           <Button variant="ghost" size="icon-sm" className="lg:hidden" aria-label="Open navigation">
             <Menu />
           </Button>
         </SheetTrigger>
-        <SheetContent side="left" className="w-72 gap-0 border-sidebar-border bg-sidebar p-0 text-sidebar-foreground">
+        <SheetContent side="left" className="w-72 gap-0 border-0 glass-dark p-0 text-sidebar-foreground">
           <SheetHeader className="flex-row items-center gap-3 border-b border-sidebar-border px-4 py-4">
             <BrandMark />
             <SheetTitle className="text-sidebar-accent-foreground">
@@ -45,17 +46,18 @@ export function Topbar({ items, companyName, user, today, signOutLabel }: Props)
       </Sheet>
 
       <div className="min-w-0 flex-1">
-        <p className="truncate text-sm font-medium text-foreground/90">{current?.label ?? companyName}</p>
-        <p className="hidden text-xs text-muted-foreground sm:block">
+        <p className="truncate font-heading text-[15px] font-semibold text-foreground">{current?.label ?? companyName}</p>
+        <p className="hidden items-center gap-1.5 text-xs text-muted-foreground sm:flex">
+          <CalendarDays className="size-3.5 text-primary" />
           {new Intl.DateTimeFormat("en-GB", { weekday: "long", day: "numeric", month: "long", year: "numeric" }).format(new Date(`${today}T00:00:00`))}
         </p>
       </div>
 
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <button type="button" className="flex items-center gap-2.5 rounded-full p-0.5 pr-2 transition-colors hover:bg-muted" aria-label="Account menu">
+          <button type="button" className="flex items-center gap-2.5 rounded-full border border-white/70 bg-white/50 p-1 pr-3 transition-colors hover:bg-white/90" aria-label="Account menu">
             <Avatar className="size-8">
-              <AvatarFallback className="bg-primary text-xs font-semibold text-primary-foreground">{initials}</AvatarFallback>
+              <AvatarFallback className="bg-brand text-xs font-semibold text-white">{initials}</AvatarFallback>
             </Avatar>
             <span className="hidden text-left leading-tight md:block">
               <span className="block max-w-40 truncate text-sm font-medium">{user.name}</span>
@@ -81,6 +83,7 @@ export function Topbar({ items, companyName, user, today, signOutLabel }: Props)
           </form>
         </DropdownMenuContent>
       </DropdownMenu>
+      </div>
     </header>
   );
 }

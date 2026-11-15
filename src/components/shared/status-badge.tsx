@@ -27,7 +27,8 @@ const styles: Record<string, string> = {
 export function StatusBadge({ status, label }: { status: string | null | undefined; label?: string }) {
   const s = status ?? "";
   return (
-    <Badge variant="outline" className={cn(styles[s] ?? "bg-muted text-muted-foreground")}>
+    <Badge variant="outline" className={cn("gap-1.5 rounded-full px-2.5 backdrop-blur-sm", styles[s] ?? "bg-muted text-muted-foreground")}>
+      <span className="size-1.5 rounded-full bg-current opacity-70" aria-hidden />
       {label ?? titleCase(s)}
     </Badge>
   );

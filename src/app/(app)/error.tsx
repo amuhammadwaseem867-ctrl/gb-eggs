@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { AlertOctagon, RotateCcw } from "lucide-react";
+import { AlertOctagon, RotateCcw } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 
 export default function AppError({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) {

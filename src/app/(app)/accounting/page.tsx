@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowDownLeft, ArrowUpRight, HandCoins, Landmark, Scale } from "lucide-react";
+import { ArrowDownLeft, ArrowUpRight, HandCoins, Landmark, Scale } from "@/components/icons";
 import { PageHeader } from "@/components/shared/page-header";
 import { DataTable, type Column } from "@/components/shared/data-table";
 import { DateRangeFilter, FilterSelect, LinkTabs, Toolbar } from "@/components/shared/table-controls";

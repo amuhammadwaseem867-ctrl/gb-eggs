@@ -31,15 +31,15 @@ interface Props<T extends Row> {
 export function DataTable<T extends Row>({ columns, rows, total, page = 1, pageSize = 25, empty, footer, rowKey, dense }: Props<T>) {
   const alignClass = (a?: string) => (a === "right" ? "text-right" : a === "center" ? "text-center" : "text-left");
   return (
-    <div className="overflow-hidden rounded-xl border bg-card shadow-xs">
+    <div className="overflow-hidden rounded-2xl glass">
       <div className="overflow-x-auto">
         <Table>
           <TableHeader>
-            <TableRow className="bg-muted/50 hover:bg-muted/50">
+            <TableRow className="border-b border-white/60 bg-white/40 hover:bg-white/40">
               {columns.map((c) => (
                 <TableHead
                   key={c.key}
-                  className={cn("h-10 text-xs font-semibold tracking-wide text-muted-foreground uppercase", alignClass(c.align), c.hideOnMobile && "hidden md:table-cell", c.className)}
+                  className={cn("h-11 text-[11px] font-semibold tracking-wider text-muted-foreground uppercase", alignClass(c.align), c.hideOnMobile && "hidden md:table-cell", c.className)}
                 >
                   {c.header}
                 </TableHead>
@@ -55,7 +55,7 @@ export function DataTable<T extends Row>({ columns, rows, total, page = 1, pageS
               </TableRow>
             ) : (
               rows.map((r, i) => (
-                <TableRow key={rowKey ? rowKey(r) : (r.id as string) ?? i}>
+                <TableRow key={rowKey ? rowKey(r) : (r.id as string) ?? i} className="border-white/50 transition-colors hover:bg-white/55">
                   {columns.map((c) => (
                     <TableCell
                       key={c.key}

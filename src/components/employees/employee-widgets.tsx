@@ -3,7 +3,7 @@
 import * as React from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { Banknote, CalendarPlus, Loader2, Save } from "lucide-react";
+import { Banknote, CalendarPlus, Loader2, Save } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
@@ -43,7 +43,7 @@ export function AttendanceSheet({ date, employees, canEdit }: { date: string; em
       } else toast.error(res.error);
     });
   return (
-    <div className="overflow-hidden rounded-xl border bg-card">
+    <div className="overflow-hidden rounded-2xl glass">
       <div className="flex flex-wrap items-center justify-between gap-2 border-b bg-muted/40 px-4 py-2.5">
         <p className="text-sm text-muted-foreground">{STATUSES.map((s) => `${s.label} = ${s.title}`).join(" · ")}</p>
         {canEdit ? (

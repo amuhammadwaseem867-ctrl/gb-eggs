@@ -4,7 +4,7 @@ import * as React from "react";
 import { useRouter } from "next/navigation";
 import { useFieldArray, useForm, useWatch } from "react-hook-form";
 import { toast } from "sonner";
-import { CheckCircle2, Loader2, Plus, Save, Trash2 } from "lucide-react";
+import { CheckCircle2, Loader2, Plus, Save, Trash2 } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -153,7 +153,7 @@ export function InvoiceForm({ kind, today, parties, locations, grades, units, ac
           </CardHeader>
           <CardContent className="grid gap-4 sm:grid-cols-2">
             {isSale ? (
-              <div className="flex items-center justify-between rounded-lg border bg-muted/40 px-3 py-2 sm:col-span-2">
+              <div className="flex items-center justify-between rounded-xl border border-white/70 bg-white/50 px-3 py-2 backdrop-blur sm:col-span-2">
                 <div>
                   <p className="text-sm font-medium">Walk-in customer</p>
                   <p className="text-xs text-muted-foreground">Cash sale without an account — must be paid in full.</p>

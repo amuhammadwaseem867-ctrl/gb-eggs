@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowLeft, CheckCircle2, Pencil, Printer, Trash2, XCircle } from "lucide-react";
+import { ArrowLeft, CheckCircle2, Pencil, Printer, Trash2, XCircle } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DataTable, type Column } from "@/components/shared/data-table";

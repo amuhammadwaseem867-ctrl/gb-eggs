@@ -1,4 +1,4 @@
-import { Boxes, Egg, PackageMinus, Warehouse } from "lucide-react";
+import { Boxes, Egg, PackageMinus, Warehouse } from "@/components/icons";
 import { PageHeader } from "@/components/shared/page-header";
 import { DataTable, type Column } from "@/components/shared/data-table";
 import { DateRangeFilter, FilterSelect, LinkTabs, Toolbar } from "@/components/shared/table-controls";

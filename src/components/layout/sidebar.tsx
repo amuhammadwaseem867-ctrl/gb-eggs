@@ -4,9 +4,9 @@ import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
-  Bird, Boxes, Egg, FileBarChart, IdCard, Landmark, LayoutDashboard, PanelLeftClose, PanelLeftOpen, ReceiptText,
+  Bird, Boxes, Egg, FileBarChart, IdCard, Landmark, LayoutDashboard, PanelLeft, ReceiptText,
   Settings, ShoppingCart, Syringe, Truck, Users, Wallet, Wheat, type LucideIcon,
-} from "lucide-react";
+} from "@/components/icons";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { BrandMark, BrandName } from "@/components/layout/brand";
 import { cn } from "@/lib/utils";
@@ -53,26 +53,28 @@ export function Sidebar({ items, companyName, collapseLabel }: { items: SidebarI
   return (
     <aside
       className={cn(
-        "no-print sticky top-0 hidden h-svh shrink-0 flex-col bg-sidebar text-sidebar-foreground transition-[width] duration-300 ease-out lg:flex",
-        collapsed ? "w-[4.5rem]" : "w-64",
+        "no-print sticky top-3 z-20 m-3 mr-0 hidden h-[calc(100svh-1.5rem)] shrink-0 flex-col overflow-hidden rounded-3xl glass-dark text-sidebar-foreground transition-[width] duration-300 ease-out lg:flex",
+        collapsed ? "w-[4.75rem]" : "w-64",
       )}
     >
-      <div className={cn("flex h-16 items-center gap-3 border-b border-sidebar-border px-4", collapsed && "justify-center px-0")}>
+      <div className="pointer-events-none absolute -top-16 -left-10 size-48 rounded-full bg-[oklch(0.7_0.16_160/0.35)] blur-3xl" aria-hidden />
+      <div className="pointer-events-none absolute -bottom-20 -right-16 size-56 rounded-full bg-[oklch(0.8_0.15_78/0.18)] blur-3xl" aria-hidden />
+      <div className={cn("relative flex h-[4.5rem] items-center gap-3 border-b border-sidebar-border px-4", collapsed && "justify-center px-0")}>
         <BrandMark />
         {!collapsed ? <BrandName name={companyName} className="text-sidebar-accent-foreground" /> : null}
       </div>
       <NavList items={items} pathname={pathname} collapsed={collapsed} />
-      <div className="border-t border-sidebar-border p-3">
+      <div className="relative border-t border-sidebar-border p-3">
         <button
           type="button"
           onClick={toggle}
           className={cn(
-            "flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm text-sidebar-foreground/80 transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
+            "flex w-full items-center gap-3 rounded-xl px-3 py-2 text-sm text-sidebar-foreground/80 transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
             collapsed && "justify-center px-0",
           )}
           aria-label={collapseLabel}
         >
-          {collapsed ? <PanelLeftOpen className="size-4" /> : <PanelLeftClose className="size-4" />}
+          <PanelLeft className={cn("size-[18px] transition-transform", collapsed && "rotate-180")} />
           {!collapsed ? <span>{collapseLabel}</span> : null}
         </button>
       </div>
@@ -82,8 +84,8 @@ export function Sidebar({ items, companyName, collapseLabel }: { items: SidebarI
 
 export function NavList({ items, pathname, collapsed = false, onNavigate }: { items: SidebarItem[]; pathname: string; collapsed?: boolean; onNavigate?: () => void }) {
   return (
-    <nav className="flex-1 overflow-y-auto px-3 py-4" aria-label="Main">
-      <ul className="flex flex-col gap-0.5">
+    <nav className="relative flex-1 overflow-y-auto px-3 py-4 [scrollbar-width:thin]" aria-label="Main">
+      <ul className="flex flex-col gap-1">
         {items.map((item) => {
           const Icon = ICONS[item.icon] ?? LayoutDashboard;
           const active = pathname === item.href || pathname.startsWith(`${item.href}/`);
@@ -93,15 +95,21 @@ export function NavList({ items, pathname, collapsed = false, onNavigate }: { it
               onClick={onNavigate}
               aria-current={active ? "page" : undefined}
               className={cn(
-                "group relative flex items-center gap-3 rounded-lg px-3 py-2 text-[13.5px] font-medium transition-colors",
+                "group relative flex items-center gap-3 rounded-xl px-2.5 py-2 text-[13.5px] font-medium transition-all duration-200",
                 active
-                  ? "bg-sidebar-accent text-sidebar-accent-foreground"
-                  : "text-sidebar-foreground/75 hover:bg-sidebar-accent/60 hover:text-sidebar-accent-foreground",
+                  ? "bg-gradient-to-r from-white/14 to-white/4 text-sidebar-accent-foreground shadow-[inset_0_1px_0_oklch(1_0_0/0.12)] ring-1 ring-white/10"
+                  : "text-sidebar-foreground/70 hover:bg-white/6 hover:text-sidebar-accent-foreground",
                 collapsed && "justify-center px-0",
               )}
             >
-              {active ? <span className="absolute inset-y-1.5 left-0 w-[3px] rounded-r bg-sidebar-primary" aria-hidden /> : null}
-              <Icon className={cn("size-[18px] shrink-0", active ? "text-sidebar-primary" : "opacity-80")} />
+              <span
+                className={cn(
+                  "flex size-8 shrink-0 items-center justify-center rounded-lg transition-all duration-200",
+                  active ? "bg-brand text-white shadow-glow" : "bg-white/5 text-sidebar-foreground/80 group-hover:bg-white/10 group-hover:text-white",
+                )}
+              >
+                <Icon className="size-[18px]" />
+              </span>
               {!collapsed ? <span className="truncate">{item.label}</span> : null}
             </Link>
           );

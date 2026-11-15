@@ -8,7 +8,7 @@ export default function SetupPage() {
   if (isSupabaseConfigured) redirect("/login");
   return (
     <div className="flex min-h-svh items-center justify-center bg-muted/40 px-4">
-      <div className="w-full max-w-xl rounded-2xl border bg-card p-8 shadow-sm">
+      <div className="w-full max-w-xl rounded-3xl glass-strong p-8">
         <div className="mb-6 flex items-center gap-3">
           <BrandMark />
           <h1 className="font-heading text-xl font-semibold">GB Eggs needs a Supabase project</h1>

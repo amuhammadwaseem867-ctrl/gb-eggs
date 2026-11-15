@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { FileBarChart } from "lucide-react";
+import { FileBarChart } from "@/components/icons";
 import { PageHeader } from "@/components/shared/page-header";
 import { DateRangeFilter, FilterSelect, Toolbar } from "@/components/shared/table-controls";
 import { ExportButtons } from "@/components/reports/export-buttons";
@@ -46,7 +46,7 @@ export default async function ReportsPage({ searchParams }: PageSearchProps) {
     <div className="flex flex-col gap-6">
       <PageHeader title="Reports" description="Filter any report by date and the relevant farm, shed, customer, supplier or category, then download it as PDF or Excel." />
       <div className="grid gap-6 lg:grid-cols-[260px_1fr]">
-        <nav className="flex gap-1 overflow-x-auto lg:flex-col" aria-label="Reports">
+        <nav className="flex h-fit gap-1 overflow-x-auto rounded-2xl glass p-1.5 lg:sticky lg:top-24 lg:flex-col" aria-label="Reports">
           {available.map((r) => {
             const next = new URLSearchParams();
             next.set("report", r.key);
@@ -57,7 +57,7 @@ export default async function ReportsPage({ searchParams }: PageSearchProps) {
                 key={r.key}
                 href={`/reports?${next}`}
                 aria-current={r.key === key ? "page" : undefined}
-                className={cn("shrink-0 rounded-lg px-3 py-2 text-sm transition-colors", r.key === key ? "bg-accent font-medium text-accent-foreground" : "text-muted-foreground hover:bg-muted hover:text-foreground")}
+                className={cn("shrink-0 rounded-xl px-3 py-2 text-sm transition-all", r.key === key ? "bg-brand font-medium text-white shadow-glow" : "text-muted-foreground hover:bg-white/60 hover:text-foreground")}
               >
                 {r.title}
               </Link>
@@ -103,7 +103,7 @@ export default async function ReportsPage({ searchParams }: PageSearchProps) {
                     <div className="overflow-x-auto">
                       <Table>
                         <TableHeader>
-                          <TableRow className="bg-muted/50">
+                          <TableRow className="bg-white/40">
                             {result.columns.map((c) => (
                               <TableHead key={c.key} className={cn("text-xs font-semibold whitespace-nowrap uppercase", (c.type === "money" || c.type === "number") && "text-right")}>{c.header}</TableHead>
                             ))}

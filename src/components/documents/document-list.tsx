@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Plus } from "lucide-react";
+import { Plus } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { PageHeader } from "@/components/shared/page-header";
 import { DataTable, type Column } from "@/components/shared/data-table";
@@ -14,7 +14,7 @@ import { dateRange, isUuid, paging, param, searchFilter, todayIn, type SearchPar
 import { createClient } from "@/lib/supabase/server";
 import { formatCurrency, formatDate, formatNumber } from "@/lib/format";
 import type { Row, Session } from "@/lib/types";
-import { Banknote, FileText, HandCoins, Wallet } from "lucide-react";
+import { Banknote, FileText, HandCoins, Wallet } from "@/components/icons";
 
 /** Shared invoice list for sales and purchases. */
 export async function DocumentList({ kind, session, sp }: { kind: DocKind; session: Session; sp: SearchParams }) {

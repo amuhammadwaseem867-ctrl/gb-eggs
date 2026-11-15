@@ -3,7 +3,7 @@
 import * as React from "react";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { ChevronLeft, ChevronRight, Search } from "lucide-react";
+import { ChevronLeft, ChevronRight, Search } from "@/components/icons";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { SearchSelect } from "@/components/forms/search-select";
@@ -98,7 +98,7 @@ export function Pagination({ total, page, pageSize }: { total: number; page: num
   const from = (page - 1) * pageSize + 1;
   const to = Math.min(total, page * pageSize);
   return (
-    <div className="flex items-center justify-between gap-2 border-t px-4 py-2.5 text-sm">
+    <div className="flex items-center justify-between gap-2 border-t border-white/60 bg-white/30 px-4 py-2.5 text-sm">
       <p className="text-muted-foreground">
         <span className="tabular">{from.toLocaleString()}–{to.toLocaleString()}</span> of <span className="tabular">{total.toLocaleString()}</span>
       </p>
@@ -126,7 +126,7 @@ export function LinkTabs({ tabs, param = "tab" }: { tabs: { value: string; label
   const pathname = usePathname();
   const current = params.get(param) ?? tabs[0]?.value;
   return (
-    <nav className="-mx-1 flex gap-1 overflow-x-auto border-b px-1" aria-label="Sections">
+    <nav className="flex w-fit max-w-full gap-1 overflow-x-auto rounded-2xl glass-subtle p-1" aria-label="Sections">
       {tabs.map((t) => {
         const next = new URLSearchParams();
         if (t.value !== tabs[0].value) next.set(param, t.value);
@@ -138,12 +138,12 @@ export function LinkTabs({ tabs, param = "tab" }: { tabs: { value: string; label
             scroll={false}
             aria-current={active ? "page" : undefined}
             className={cn(
-              "relative -mb-px shrink-0 border-b-2 px-3 py-2 text-sm font-medium whitespace-nowrap transition-colors",
-              active ? "border-primary text-foreground" : "border-transparent text-muted-foreground hover:text-foreground",
+              "relative shrink-0 rounded-xl px-3.5 py-1.5 text-sm font-medium whitespace-nowrap transition-all duration-200",
+              active ? "bg-white text-foreground shadow-[0_4px_14px_-6px_oklch(0.25_0.06_266/0.3)] ring-1 ring-white" : "text-muted-foreground hover:bg-white/50 hover:text-foreground",
             )}
           >
             {t.label}
-            {t.count !== undefined ? <span className="ml-1.5 rounded-full bg-muted px-1.5 py-0.5 text-[11px] text-muted-foreground">{t.count}</span> : null}
+            {t.count !== undefined ? <span className={cn("ml-1.5 rounded-full px-1.5 py-0.5 text-[11px]", active ? "bg-brand text-white" : "bg-muted text-muted-foreground")}>{t.count}</span> : null}
           </Link>
         );
       })}
