@@ -1,7 +1,7 @@
 "use client";
 
-import { useActionState } from "react";
-import { Loader2 } from "@/components/icons";
+import { useActionState, useState } from "react";
+import { Eye, EyeOff, Loader2 } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -9,6 +9,7 @@ import { registerFirstAdmin, signIn } from "@/app/actions/auth";
 
 export function LoginForm({ firstRun, next }: { firstRun: boolean; next: string }) {
   const [state, action, pending] = useActionState(firstRun ? registerFirstAdmin : signIn, null);
+  const [showPassword, setShowPassword] = useState(false);
   return (
     <form action={action} className="flex flex-col gap-5">
       <div>
@@ -32,7 +33,27 @@ export function LoginForm({ firstRun, next }: { firstRun: boolean; next: string 
       </div>
       <div className="flex flex-col gap-1.5">
         <Label htmlFor="password">Password</Label>
-        <Input id="password" name="password" type="password" autoComplete={firstRun ? "new-password" : "current-password"} minLength={8} required className="h-11" />
+        <div className="relative">
+          <Input
+            id="password"
+            name="password"
+            type={showPassword ? "text" : "password"}
+            autoComplete={firstRun ? "new-password" : "current-password"}
+            minLength={8}
+            required
+            className="h-11 pr-11"
+          />
+          <button
+            type="button"
+            onClick={() => setShowPassword((v) => !v)}
+            aria-label={showPassword ? "Hide password" : "Show password"}
+            aria-pressed={showPassword}
+            title={showPassword ? "Hide password" : "Show password"}
+            className="absolute top-1/2 right-1.5 flex size-8 -translate-y-1/2 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-accent hover:text-primary focus-visible:ring-2 focus-visible:ring-ring/40 focus-visible:outline-none"
+          >
+            {showPassword ? <EyeOff className="size-[18px]" /> : <Eye className="size-[18px]" />}
+          </button>
+        </div>
       </div>
       {state && !state.ok ? (
         <p role="alert" className="rounded-lg border border-destructive/30 bg-destructive/10 px-3 py-2 text-sm text-destructive">{state.error}</p>

@@ -112,3 +112,5 @@ export const Moon = make(P.Moon, "duotone", "Moon");
 export const Monitor = make(P.Monitor, "duotone", "Monitor");
 export const Palette = make(P.Palette, "duotone", "Palette");
 export const Lightning = make(P.Lightning, "fill", "Lightning");
+export const Eye = make(P.Eye, "duotone", "Eye");
+export const EyeOff = make(P.EyeSlash, "duotone", "EyeOff");

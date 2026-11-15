@@ -31,7 +31,7 @@ page.on("pageerror", (e) => console.log("  pageerror:", e.message));
 
 await page.goto(`${BASE}/login`);
 await page.getByLabel("Email").fill("admin@gbeggs.test");
-await page.getByLabel("Password").fill("Admin12345!");
+await page.getByLabel("Password", { exact: true }).fill("Admin12345!");
 await page.getByRole("button", { name: "Sign in" }).click();
 await page.waitForURL("**/dashboard");
 
@@ -187,7 +187,7 @@ await step("staff user is limited by role", async () => {
   const sp = await sctx.newPage();
   await sp.goto(`${BASE}/login`);
   await sp.getByLabel("Email").fill("staff@gbeggs.test");
-  await sp.getByLabel("Password").fill("Staff12345!");
+  await sp.getByLabel("Password", { exact: true }).fill("Staff12345!");
   await sp.getByRole("button", { name: "Sign in" }).click();
   await sp.waitForURL("**/dashboard");
   const nav = await sp.getByRole("navigation", { name: "Main" }).innerText();
