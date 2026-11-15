@@ -16,10 +16,12 @@ interface Props {
   clearable?: boolean;
   id?: string;
   className?: string;
+  /** Accessible name when no <label htmlFor={id}> points at the control. Defaults to the placeholder. */
+  ariaLabel?: string;
 }
 
 /** Accessible searchable select (combobox) for long option lists. */
-export function SearchSelect({ value, onChange, options, placeholder = "Select…", disabled, invalid, clearable = true, id, className }: Props) {
+export function SearchSelect({ value, onChange, options, placeholder = "Select…", disabled, invalid, clearable = true, id, className, ariaLabel }: Props) {
   const [open, setOpenState] = React.useState(false);
   const listId = React.useId();
   const setOpen = (o: boolean) => {
@@ -71,10 +73,11 @@ export function SearchSelect({ value, onChange, options, placeholder = "Select�
           aria-expanded={open}
           aria-controls={listId}
           aria-invalid={invalid || undefined}
+          aria-label={ariaLabel ?? (id ? undefined : placeholder)}
           disabled={disabled}
           className={cn(
-            "flex h-9 w-full items-center justify-between gap-2 rounded-lg border border-input bg-background px-3 text-left text-sm shadow-xs transition-colors outline-none",
-            "focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/40 disabled:cursor-not-allowed disabled:opacity-50",
+            "flex h-9 w-full items-center justify-between gap-2 rounded-xl border border-input bg-surface/70 px-3 text-left text-sm shadow-xs backdrop-blur-sm transition-colors outline-none",
+            "focus-visible:border-ring focus-visible:ring-4 focus-visible:ring-ring/20 disabled:cursor-not-allowed disabled:opacity-50",
             "aria-invalid:border-destructive aria-invalid:ring-destructive/20",
             className,
           )}

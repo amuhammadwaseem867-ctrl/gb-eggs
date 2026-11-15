@@ -39,17 +39,17 @@ export default async function LoginPage({ searchParams }: PageSearchProps) {
           <p className="mt-5 text-base leading-relaxed opacity-80">
             Track production by shed, grade and pack inventory, invoice customers, settle suppliers and close your books from one place.
           </p>
-          <dl className="mt-10 grid grid-cols-3 gap-3 text-sm">
+          <ul className="mt-10 grid grid-cols-3 gap-3 text-sm">
             {FEATURES.map(({ k, v, icon: Icon, tile }) => (
-              <div key={k} className="rounded-2xl border border-white/10 bg-white/6 p-4 backdrop-blur-md">
+              <li key={k} className="rounded-2xl border border-white/10 bg-white/6 p-4 backdrop-blur-md">
                 <span className={`mb-3 flex size-9 items-center justify-center rounded-xl bg-gradient-to-br text-white ${tile}`}>
                   <Icon className="size-5" />
                 </span>
-                <dt className="font-semibold text-white">{k}</dt>
-                <dd className="mt-1 text-xs opacity-70">{v}</dd>
-              </div>
+                <p className="font-semibold text-white">{k}</p>
+                <p className="mt-1 text-xs opacity-70">{v}</p>
+              </li>
             ))}
-          </dl>
+          </ul>
         </div>
         <p className="relative text-xs opacity-50">© {new Date().getFullYear()} GB Eggs</p>
       </section>

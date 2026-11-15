@@ -113,8 +113,8 @@ export function PaySalaryDialog({ id, name, amount, accounts, today }: { id: str
           <DialogDescription>Net pay of {formatCurrency(amount)} is posted to the cashbook. Advance recovery is applied to the oldest advances first.</DialogDescription>
         </DialogHeader>
         <div className="flex flex-col gap-3">
-          <div className="flex flex-col gap-1.5"><span className="text-sm font-medium">Paid from</span><SearchSelect value={account} onChange={setAccount} options={accounts} clearable={false} /></div>
-          <div className="flex flex-col gap-1.5"><span className="text-sm font-medium">Method</span><SearchSelect value={method} onChange={setMethod} options={PAYMENT_METHODS} clearable={false} /></div>
+          <div className="flex flex-col gap-1.5"><span className="text-sm font-medium">Paid from</span><SearchSelect value={account} onChange={setAccount} options={accounts} clearable={false} ariaLabel="Paid from" /></div>
+          <div className="flex flex-col gap-1.5"><span className="text-sm font-medium">Method</span><SearchSelect value={method} onChange={setMethod} options={PAYMENT_METHODS} clearable={false} ariaLabel="Payment method" /></div>
           <div className="flex flex-col gap-1.5"><Label htmlFor="pay-date">Date</Label><Input id="pay-date" type="date" max={today} value={date} onChange={(e) => setDate(e.target.value)} /></div>
         </div>
         <div className="flex justify-end gap-2 border-t pt-4">

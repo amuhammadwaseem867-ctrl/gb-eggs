@@ -4,16 +4,12 @@ import { redirect } from "next/navigation";
 import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
 import type { ActionResult } from "@/lib/types";
+import { safeNext } from "@/lib/safe-next";
 
 const credentials = z.object({
   email: z.email("Enter a valid email"),
   password: z.string().min(8, "Password must be at least 8 characters"),
 });
-
-function safeNext(next: unknown) {
-  return typeof next === "string" && next.startsWith("/") && !next.startsWith("//") ? next : "/dashboard";
-}
-
 export async function signIn(_: ActionResult | null, formData: FormData): Promise<ActionResult> {
   const parsed = credentials.safeParse({ email: formData.get("email"), password: formData.get("password") });
   if (!parsed.success) return { ok: false, error: parsed.error.issues[0].message };

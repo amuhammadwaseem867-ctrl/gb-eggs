@@ -147,9 +147,9 @@ export async function createUser(input: z.input<typeof newUserSchema>): Promise<
       user_metadata: { full_name: v.full_name },
     });
     if (error || !data.user) return { ok: false, error: error?.message ?? "Could not create user" };
-    // The profile is created by the on_auth_user_created trigger; set the role as admin (RLS-checked).
+    // The profile is created (inactive) by the on_auth_user_created trigger; activate it with the chosen role (RLS-checked).
     const supabase = await createClient();
-    const { error: pErr } = await supabase.from("profiles").update({ role_code: v.role_code, full_name: v.full_name }).eq("id", data.user.id);
+    const { error: pErr } = await supabase.from("profiles").update({ role_code: v.role_code, full_name: v.full_name, is_active: true }).eq("id", data.user.id);
     if (pErr) return { ok: false, error: friendlyError(pErr) };
     revalidatePath("/settings");
     return { ok: true, message: `Account created for ${v.email}` };

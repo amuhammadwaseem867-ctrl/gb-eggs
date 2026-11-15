@@ -105,7 +105,7 @@ export function CompanySettingsForm({ settings, canEdit }: { settings: AppSettin
           <F label="Currency"><Input value={v.currency} maxLength={3} onChange={(e) => set("currency", e.target.value.toUpperCase())} disabled={!canEdit} /></F>
           <F label="Time zone"><Input value={v.timezone} onChange={(e) => set("timezone", e.target.value)} disabled={!canEdit} /></F>
           <F label="Language" help="Urdu switches the navigation to Urdu and right-to-left layout.">
-            <SearchSelect value={v.language} onChange={(x) => set("language", (x || "en") as "en" | "ur")} options={[{ value: "en", label: "English" }, { value: "ur", label: "اردو — Urdu" }]} clearable={false} disabled={!canEdit} />
+            <SearchSelect ariaLabel="Language" value={v.language} onChange={(x) => set("language", (x || "en") as "en" | "ur")} options={[{ value: "en", label: "English" }, { value: "ur", label: "اردو — Urdu" }]} clearable={false} disabled={!canEdit} />
           </F>
           <F label="Invoice footer"><Input value={v.invoice_footer ?? ""} onChange={(e) => set("invoice_footer", e.target.value)} disabled={!canEdit} /></F>
           <div className="flex items-center justify-between rounded-lg border p-3 sm:col-span-2">
@@ -113,7 +113,7 @@ export function CompanySettingsForm({ settings, canEdit }: { settings: AppSettin
               <p className="text-sm font-medium">Charge sales tax on invoices</p>
               <p className="text-xs text-muted-foreground">Applied to (subtotal − discount) on new invoices.</p>
             </div>
-            <Switch checked={v.tax_enabled} onCheckedChange={(c) => set("tax_enabled", c)} disabled={!canEdit} />
+            <Switch aria-label="Charge sales tax on invoices" checked={v.tax_enabled} onCheckedChange={(c) => set("tax_enabled", c)} disabled={!canEdit} />
           </div>
           <F label="Tax label"><Input value={v.tax_label} onChange={(e) => set("tax_label", e.target.value)} disabled={!canEdit || !v.tax_enabled} /></F>
           <F label="Tax rate (%)"><Input type="number" min={0} max={100} step="0.01" value={v.tax_rate} onChange={(e) => set("tax_rate", e.target.value as unknown as number)} disabled={!canEdit || !v.tax_enabled} /></F>
@@ -124,7 +124,7 @@ export function CompanySettingsForm({ settings, canEdit }: { settings: AppSettin
               <p className="text-sm font-medium">Allow negative egg stock</p>
               <p className="text-xs text-muted-foreground">Administrator override. Leave off so sales can never exceed stock.</p>
             </div>
-            <Switch checked={v.allow_negative_stock} onCheckedChange={(c) => set("allow_negative_stock", c)} disabled={!canEdit} />
+            <Switch aria-label="Allow negative egg stock" checked={v.allow_negative_stock} onCheckedChange={(c) => set("allow_negative_stock", c)} disabled={!canEdit} />
           </div>
         </CardContent>
       </Card>
@@ -259,7 +259,7 @@ export function UserRow({ user, currentUserId }: { user: Row; currentUserId: str
         <p className="text-sm font-medium">{user.full_name || user.email}{user.id === currentUserId ? <span className="ml-2 text-xs text-muted-foreground">(you)</span> : null}</p>
         <p className="text-xs text-muted-foreground">{user.email}</p>
       </div>
-      <div className="w-44"><SearchSelect value={role} onChange={(x) => setRole(x || role)} options={ROLES} clearable={false} /></div>
+      <div className="w-44"><SearchSelect value={role} onChange={(x) => setRole(x || role)} options={ROLES} clearable={false} ariaLabel="Role" /></div>
       <label className="flex items-center gap-2 text-sm"><Switch checked={active} onCheckedChange={setActive} /> Active</label>
       <Button
         size="sm"
@@ -301,7 +301,7 @@ export function CreateUserDialog({ enabled }: { enabled: boolean }) {
           <F label="Full name"><Input value={v.full_name} onChange={(e) => setV({ ...v, full_name: e.target.value })} /></F>
           <F label="Email"><Input type="email" value={v.email} onChange={(e) => setV({ ...v, email: e.target.value })} /></F>
           <F label="Temporary password"><Input type="password" autoComplete="new-password" value={v.password} onChange={(e) => setV({ ...v, password: e.target.value })} /></F>
-          <F label="Role"><SearchSelect value={v.role_code} onChange={(x) => setV({ ...v, role_code: x || "staff" })} options={ROLES} clearable={false} /></F>
+          <F label="Role"><SearchSelect ariaLabel="Role" value={v.role_code} onChange={(x) => setV({ ...v, role_code: x || "staff" })} options={ROLES} clearable={false} /></F>
         </div>
         <div className="flex justify-end gap-2 border-t pt-4">
           <Button variant="outline" onClick={() => setOpen(false)}>Cancel</Button>

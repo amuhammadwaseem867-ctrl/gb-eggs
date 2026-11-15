@@ -240,7 +240,7 @@ describe.skipIf(!dbEnabled)("poultry, production, feed, medicine, payroll & acco
     });
 
     it("party ledger running balance matches the computed balance", async () => {
-      const rows = await rpc<unknown>(f.accountant, "customer_balance", f.customer);
+      const [{ b: rows }] = await sql<{ b: string }>("select public.customer_balance($1) as b", [f.customer]);
       const ledger = await asUser(f.accountant, async (c) => (await c.query("select * from party_ledger('customer', $1, null, null)", [f.customer])).rows);
       expect(num(ledger[ledger.length - 1].balance)).toBe(num(rows));
     });

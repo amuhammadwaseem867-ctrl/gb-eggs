@@ -63,7 +63,7 @@ export async function createUser(role: Role): Promise<string> {
     `${role}-${id.slice(0, 8)}@gb.test`,
     JSON.stringify({ full_name: `Test ${role}` }),
   ]);
-  await sql("update public.profiles set role_code = $2 where id = $1", [id, role]);
+  await sql("update public.profiles set role_code = $2, is_active = true where id = $1", [id, role]);
   return id;
 }
 

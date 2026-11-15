@@ -172,11 +172,11 @@ export function InvoiceForm({ kind, today, parties, locations, grades, units, ac
               </>
             ) : (
               <Field label={partyLabel} required className="sm:col-span-2">
-                <SearchSelect value={v.party_id} onChange={(x) => form.setValue("party_id", x)} options={parties} placeholder={`Select ${partyLabel.toLowerCase()}…`} />
+                <SearchSelect ariaLabel={partyLabel} value={v.party_id} onChange={(x) => form.setValue("party_id", x)} options={parties} placeholder={`Select ${partyLabel.toLowerCase()}…`} />
               </Field>
             )}
             <Field label={isSale ? "Sell from (stock location)" : "Receive into (stock location)"} required>
-              <SearchSelect value={v.farm_id} onChange={(x) => form.setValue("farm_id", x)} options={locations} clearable={false} />
+              <SearchSelect ariaLabel="Stock location" value={v.farm_id} onChange={(x) => form.setValue("farm_id", x)} options={locations} clearable={false} />
             </Field>
             <Field label={isSale ? "Invoice date" : "Purchase date"} required>
               <Input type="date" max={today} {...form.register("date")} />
@@ -213,7 +213,7 @@ export function InvoiceForm({ kind, today, parties, locations, grades, units, ac
               return (
                 <div key={f.id} className="grid grid-cols-2 gap-2 rounded-lg border p-2 md:grid-cols-[1.6fr_1fr_0.8fr_1fr_1fr_auto] md:items-start md:border-0 md:p-0">
                   <div className="col-span-2 md:col-span-1">
-                    <SearchSelect value={line?.grade_id ?? ""} onChange={(x) => onGrade(i, x)} options={grades} placeholder="Select grade" clearable={false} />
+                    <SearchSelect ariaLabel={`Line ${i + 1} grade`} value={line?.grade_id ?? ""} onChange={(x) => onGrade(i, x)} options={grades} placeholder="Select grade" clearable={false} />
                     {line?.grade_id ? (
                       <p className={cn("mt-1 px-1 text-[11px]", short ? "font-medium text-destructive" : "text-muted-foreground")}>
                         {isSale ? `${formatNumber(available)} eggs in stock` : `${formatNumber(available)} now in stock`}
@@ -221,7 +221,7 @@ export function InvoiceForm({ kind, today, parties, locations, grades, units, ac
                       </p>
                     ) : null}
                   </div>
-                  <SearchSelect value={line?.unit_code ?? defaultUnit} onChange={(x) => form.setValue(`items.${i}.unit_code`, x)} options={units} clearable={false} />
+                  <SearchSelect ariaLabel={`Line ${i + 1} unit`} value={line?.unit_code ?? defaultUnit} onChange={(x) => form.setValue(`items.${i}.unit_code`, x)} options={units} clearable={false} />
                   <div>
                     <Input type="number" inputMode="decimal" min={0} step="any" placeholder="Qty" className="tabular text-right" {...form.register(`items.${i}.unit_qty`)} />
                     {eggs ? <p className="mt-1 px-1 text-right text-[11px] text-muted-foreground">{formatNumber(eggs)} eggs</p> : null}
@@ -283,10 +283,10 @@ export function InvoiceForm({ kind, today, parties, locations, grades, units, ac
               </div>
             </Field>
             <Field label="Method">
-              <SearchSelect value={v.payment_method} onChange={(x) => form.setValue("payment_method", x)} options={PAYMENT_METHODS} clearable={false} />
+              <SearchSelect ariaLabel="Payment method" value={v.payment_method} onChange={(x) => form.setValue("payment_method", x)} options={PAYMENT_METHODS} clearable={false} />
             </Field>
             <Field label="Account">
-              <SearchSelect value={v.cash_account_id} onChange={(x) => form.setValue("cash_account_id", x)} options={accounts} />
+              <SearchSelect ariaLabel="Account" value={v.cash_account_id} onChange={(x) => form.setValue("cash_account_id", x)} options={accounts} />
             </Field>
             <Row label="Balance due" value={<span className={cn("font-semibold", (totals?.balance ?? 0) > 0 && "text-destructive")}>{formatCurrency(totals?.balance ?? 0)}</span>} />
             <p className="text-xs text-muted-foreground">Payments are only posted when the document is confirmed. Further payments can be added later.</p>

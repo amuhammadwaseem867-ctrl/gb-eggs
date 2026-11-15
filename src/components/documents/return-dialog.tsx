@@ -104,7 +104,7 @@ export function ReturnDialog({ kind, docId, today, items, subtotal, discount, ta
                 </div>
                 <Input type="number" min={0} max={left} step={1} placeholder="Eggs" className="tabular text-right" value={qty[it.id] ?? ""} onChange={(e) => setQty({ ...qty, [it.id]: e.target.value })} disabled={left <= 0} aria-label={`Eggs to return for ${it.grade}`} />
                 {kind === "sale" ? (
-                  <SearchSelect value={cond[it.id] ?? "good"} onChange={(x) => setCond({ ...cond, [it.id]: (x || "good") as "good" | "damaged" })} options={[{ value: "good", label: "Good — restock" }, { value: "damaged", label: "Damaged — loss" }]} clearable={false} className="col-span-2 sm:col-span-1" />
+                  <SearchSelect ariaLabel="Condition" value={cond[it.id] ?? "good"} onChange={(x) => setCond({ ...cond, [it.id]: (x || "good") as "good" | "damaged" })} options={[{ value: "good", label: "Good — restock" }, { value: "damaged", label: "Damaged — loss" }]} clearable={false} className="col-span-2 sm:col-span-1" />
                 ) : null}
               </div>
             );
@@ -134,8 +134,8 @@ export function ReturnDialog({ kind, docId, today, items, subtotal, discount, ta
               </div>
               <div className="flex flex-col gap-1.5">
                 <p className="text-sm font-medium">Refund account / method</p>
-                <SearchSelect value={account} onChange={setAccount} options={accounts} />
-                <SearchSelect value={method} onChange={setMethod} options={PAYMENT_METHODS} clearable={false} />
+                <SearchSelect value={account} onChange={setAccount} options={accounts} ariaLabel="Refund account" />
+                <SearchSelect value={method} onChange={setMethod} options={PAYMENT_METHODS} clearable={false} ariaLabel="Refund method" />
               </div>
             </>
           )}
