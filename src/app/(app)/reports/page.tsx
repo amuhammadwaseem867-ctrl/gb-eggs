@@ -57,7 +57,7 @@ export default async function ReportsPage({ searchParams }: PageSearchProps) {
                 key={r.key}
                 href={`/reports?${next}`}
                 aria-current={r.key === key ? "page" : undefined}
-                className={cn("shrink-0 rounded-xl px-3 py-2 text-sm transition-all", r.key === key ? "bg-brand font-medium text-white shadow-glow" : "text-muted-foreground hover:bg-white/60 hover:text-foreground")}
+                className={cn("shrink-0 rounded-xl px-3 py-2 text-sm transition-all", r.key === key ? "bg-brand font-medium text-white shadow-glow" : "text-muted-foreground hover:bg-surface/60 hover:text-foreground")}
               >
                 {r.title}
               </Link>
@@ -103,7 +103,7 @@ export default async function ReportsPage({ searchParams }: PageSearchProps) {
                     <div className="overflow-x-auto">
                       <Table>
                         <TableHeader>
-                          <TableRow className="bg-white/40">
+                          <TableRow className="bg-surface/40">
                             {result.columns.map((c) => (
                               <TableHead key={c.key} className={cn("text-xs font-semibold whitespace-nowrap uppercase", (c.type === "money" || c.type === "number") && "text-right")}>{c.header}</TableHead>
                             ))}

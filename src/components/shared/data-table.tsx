@@ -35,7 +35,7 @@ export function DataTable<T extends Row>({ columns, rows, total, page = 1, pageS
       <div className="overflow-x-auto">
         <Table>
           <TableHeader>
-            <TableRow className="border-b border-white/60 bg-white/40 hover:bg-white/40">
+            <TableRow className="border-b border-surface-line/60 bg-surface/40 hover:bg-surface/40">
               {columns.map((c) => (
                 <TableHead
                   key={c.key}
@@ -55,7 +55,7 @@ export function DataTable<T extends Row>({ columns, rows, total, page = 1, pageS
               </TableRow>
             ) : (
               rows.map((r, i) => (
-                <TableRow key={rowKey ? rowKey(r) : (r.id as string) ?? i} className="border-white/50 transition-colors hover:bg-white/55">
+                <TableRow key={rowKey ? rowKey(r) : (r.id as string) ?? i} className="border-surface-line/50 transition-colors hover:bg-surface/55">
                   {columns.map((c) => (
                     <TableCell
                       key={c.key}

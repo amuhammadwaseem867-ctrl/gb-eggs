@@ -1,9 +1,8 @@
 import Link from "next/link";
-import { AlertTriangle, Bird, Boxes, CircleDollarSign, Egg, HandCoins, PackageMinus, ReceiptText, ShoppingCart, Skull, Syringe, TrendingUp, Users, Wallet } from "@/components/icons";
+import { AlertTriangle, Bird, Boxes, CircleDollarSign, Egg, FileBarChart, HandCoins, Lightning, PackageMinus, ReceiptText, ShoppingCart, Skull, Syringe, TrendingUp, Users, Wallet } from "@/components/icons";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { StatCard } from "@/components/shared/stat-card";
-import { PageHeader } from "@/components/shared/page-header";
 import { EmptyState } from "@/components/shared/empty-state";
 import { ExpenseChart, ProductionChart, RateChart, SalesChart } from "@/components/dashboard/charts";
 import { can, requirePage } from "@/lib/auth";
@@ -50,10 +49,19 @@ export default async function DashboardPage() {
 
   return (
     <div className="flex flex-col gap-6">
-      <PageHeader
-        eyebrow={formatDate(s.today, { weekday: "long" })}
-        title={`Good day, ${session.fullName.split(" ")[0]}`}
-        description="A live overview of flocks, eggs, sales and money for today."
+      <DashboardHero
+        name={session.fullName.split(" ")[0]}
+        timezone={session.settings.timezone}
+        date={formatDate(s.today, { weekday: "long" })}
+        birds={formatNumber(s.live_birds)}
+        eggs={formatNumber(s.eggs_collected_today)}
+        rate={s.production_rate_today ? formatPercent(s.production_rate_today) : null}
+        actions={[
+          can(session, "sales", "create") && { href: "/sales/new", label: "New invoice", icon: ReceiptText },
+          can(session, "purchases", "create") && { href: "/purchases/new", label: "Buy eggs", icon: ShoppingCart },
+          can(session, "production") && { href: "/production", label: "Production", icon: Egg },
+          can(session, "reports") && { href: "/reports", label: "Reports", icon: FileBarChart },
+        ].filter((a): a is QuickAction => Boolean(a))}
       />
 
       <section className="grid grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-4">
@@ -233,7 +241,7 @@ export default async function DashboardPage() {
 
 function AlertRow({ icon: Icon, title, detail, href, danger }: { icon: typeof Egg; title: string; detail: string; href: string; danger?: boolean }) {
   return (
-    <Link href={href} className="flex items-start gap-3 rounded-xl border border-white/70 bg-white/45 p-2.5 transition-all hover:-translate-y-px hover:bg-white/80">
+    <Link href={href} className="flex items-start gap-3 rounded-xl border border-surface-line/70 bg-surface/45 p-2.5 transition-all hover:-translate-y-px hover:bg-surface/80">
       <span className={cn("flex size-8 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br text-white", danger ? "from-[oklch(0.72_0.18_15)] to-[oklch(0.58_0.21_355)]" : "from-[oklch(0.86_0.15_85)] to-[oklch(0.72_0.17_55)]")}>
         <Icon className="size-4" />
       </span>
@@ -276,5 +284,62 @@ function MortalityCard({ items }: { items: Row[] }) {
         )}
       </CardContent>
     </Card>
+  );
+}
+
+type QuickAction = { href: string; label: string; icon: typeof Egg };
+
+function DashboardHero({ name, timezone, date, birds, eggs, rate, actions }: { name: string; timezone: string; date: string; birds: string; eggs: string; rate: string | null; actions: QuickAction[] }) {
+  const hour = Number(new Intl.DateTimeFormat("en-GB", { hour: "numeric", hourCycle: "h23", timeZone: timezone }).format(new Date()));
+  const greeting = hour < 12 ? "Good morning" : hour < 17 ? "Good afternoon" : "Good evening";
+  return (
+    <section className="relative overflow-hidden rounded-3xl glass-dark p-6 text-white sm:p-8">
+      <div className="gb-orb pointer-events-none absolute -top-24 -right-16 size-80 rounded-full bg-primary/45 blur-3xl" aria-hidden />
+      <div className="gb-orb pointer-events-none absolute -bottom-28 left-1/3 size-72 rounded-full bg-[oklch(0.82_0.15_78/0.28)] blur-3xl [animation-delay:-8s]" aria-hidden />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(oklch(1_0_0/0.07)_1px,transparent_1px)] [background-size:20px_20px] [mask-image:linear-gradient(to_left,black,transparent_70%)]" aria-hidden />
+      <svg viewBox="0 0 120 150" className="pointer-events-none absolute right-8 bottom-[-1.5rem] hidden h-48 opacity-90 drop-shadow-[0_20px_30px_oklch(0.1_0.05_268/0.6)] md:block" aria-hidden>
+        <defs>
+          <linearGradient id="heroEgg" x1="0.2" y1="0" x2="0.8" y2="1">
+            <stop offset="0" stopColor="#fff" />
+            <stop offset="1" stopColor="oklch(0.9 0.05 80)" />
+          </linearGradient>
+          <radialGradient id="heroYolk" cx="0.4" cy="0.4" r="0.6">
+            <stop offset="0" stopColor="oklch(0.9 0.16 88)" />
+            <stop offset="1" stopColor="oklch(0.72 0.18 55)" />
+          </radialGradient>
+        </defs>
+        <path d="M60 4C34 4 14 46 14 76c0 34 20 62 46 62s46-28 46-62C106 46 86 4 60 4Z" fill="url(#heroEgg)" />
+        <circle cx="60" cy="88" r="22" fill="url(#heroYolk)" />
+        <ellipse cx="42" cy="38" rx="7" ry="13" fill="#fff" opacity="0.85" transform="rotate(22 42 38)" />
+      </svg>
+
+      <div className="relative max-w-2xl">
+        <p className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs font-medium text-white/85 backdrop-blur">
+          <Lightning className="size-3.5 text-[oklch(0.86_0.15_85)]" /> {date}
+        </p>
+        <h1 className="mt-3 font-heading text-3xl font-bold tracking-tight sm:text-4xl">
+          {greeting}, <span className="bg-gradient-to-r from-[oklch(0.88_0.13_160)] to-[oklch(0.9_0.14_85)] bg-clip-text text-transparent">{name}</span>
+        </h1>
+        <p className="mt-2 text-sm text-white/70 sm:text-base">
+          {birds} live birds on the farm · {eggs} eggs collected today{rate ? ` · ${rate} lay rate` : ""}
+        </p>
+        {actions.length ? (
+          <div className="mt-5 flex flex-wrap gap-2">
+            {actions.map(({ href, label, icon: Icon }, i) => (
+              <Link
+                key={href}
+                href={href}
+                className={cn(
+                  "inline-flex items-center gap-2 rounded-xl px-3.5 py-2 text-sm font-medium transition-all hover:-translate-y-px",
+                  i === 0 ? "bg-brand text-white shadow-glow hover:brightness-110" : "border border-white/15 bg-white/10 text-white/90 backdrop-blur hover:bg-white/20",
+                )}
+              >
+                <Icon className="size-4" /> {label}
+              </Link>
+            ))}
+          </div>
+        ) : null}
+      </div>
+    </section>
   );
 }

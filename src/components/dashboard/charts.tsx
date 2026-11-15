@@ -63,14 +63,24 @@ export function SalesChart({ data, showRevenue }: { data: { date: string; revenu
   return (
     <ResponsiveContainer width="100%" height={260}>
       <BarChart data={data} margin={{ top: 8, right: 8, left: -8, bottom: 0 }}>
+        <defs>
+          <linearGradient id="gBar1" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="var(--brand-from)" />
+            <stop offset="100%" stopColor="var(--brand-to)" stopOpacity={0.75} />
+          </linearGradient>
+          <linearGradient id="gBar2" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="oklch(0.86 0.15 85)" />
+            <stop offset="100%" stopColor="oklch(0.72 0.17 55)" stopOpacity={0.8} />
+          </linearGradient>
+        </defs>
         <CartesianGrid vertical={false} stroke="var(--border)" />
         <XAxis dataKey="date" tickFormatter={shortDate} minTickGap={24} {...axis} />
         <YAxis tickFormatter={compact} {...axis} />
         <Tooltip content={<ChartTooltip money={showRevenue} />} cursor={{ fill: "var(--muted)" }} />
         {showRevenue ? (
-          <Bar dataKey="revenue" name="Revenue" fill="var(--chart-1)" radius={[4, 4, 0, 0]} maxBarSize={22} />
+          <Bar dataKey="revenue" name="Revenue" fill="url(#gBar1)" radius={[6, 6, 0, 0]} maxBarSize={22} />
         ) : (
-          <Bar dataKey="eggs" name="Eggs sold" fill="var(--chart-2)" radius={[4, 4, 0, 0]} maxBarSize={22} />
+          <Bar dataKey="eggs" name="Eggs sold" fill="url(#gBar2)" radius={[6, 6, 0, 0]} maxBarSize={22} />
         )}
       </BarChart>
     </ResponsiveContainer>

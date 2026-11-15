@@ -9,6 +9,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { NavList, type SidebarItem } from "@/components/layout/sidebar";
 import { BrandMark, BrandName } from "@/components/layout/brand";
+import { AppearanceMenu } from "@/components/layout/appearance-menu";
 import { signOut } from "@/app/actions/auth";
 
 interface Props {
@@ -53,9 +54,11 @@ export function Topbar({ items, companyName, user, today, signOutLabel }: Props)
         </p>
       </div>
 
+      <AppearanceMenu />
+
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <button type="button" className="flex items-center gap-2.5 rounded-full border border-white/70 bg-white/50 p-1 pr-3 transition-colors hover:bg-white/90" aria-label="Account menu">
+          <button type="button" className="flex items-center gap-2.5 rounded-full border border-surface-line/70 bg-surface/50 p-1 pr-3 transition-colors hover:bg-surface/90" aria-label="Account menu">
             <Avatar className="size-8">
               <AvatarFallback className="bg-brand text-xs font-semibold text-white">{initials}</AvatarFallback>
             </Avatar>

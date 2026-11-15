@@ -98,7 +98,7 @@ export function Pagination({ total, page, pageSize }: { total: number; page: num
   const from = (page - 1) * pageSize + 1;
   const to = Math.min(total, page * pageSize);
   return (
-    <div className="flex items-center justify-between gap-2 border-t border-white/60 bg-white/30 px-4 py-2.5 text-sm">
+    <div className="flex items-center justify-between gap-2 border-t border-surface-line/60 bg-surface/30 px-4 py-2.5 text-sm">
       <p className="text-muted-foreground">
         <span className="tabular">{from.toLocaleString()}–{to.toLocaleString()}</span> of <span className="tabular">{total.toLocaleString()}</span>
       </p>
@@ -139,7 +139,7 @@ export function LinkTabs({ tabs, param = "tab" }: { tabs: { value: string; label
             aria-current={active ? "page" : undefined}
             className={cn(
               "relative shrink-0 rounded-xl px-3.5 py-1.5 text-sm font-medium whitespace-nowrap transition-all duration-200",
-              active ? "bg-white text-foreground shadow-[0_4px_14px_-6px_oklch(0.25_0.06_266/0.3)] ring-1 ring-white" : "text-muted-foreground hover:bg-white/50 hover:text-foreground",
+              active ? "bg-surface text-foreground shadow-[0_4px_14px_-6px_oklch(0.25_0.06_266/0.3)] ring-1 ring-surface-line" : "text-muted-foreground hover:bg-surface/50 hover:text-foreground",
             )}
           >
             {t.label}

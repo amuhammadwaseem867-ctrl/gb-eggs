@@ -12,7 +12,7 @@ interface Props {
 
 const tones = {
   default: { tile: "from-[oklch(0.45_0.05_266)] to-[oklch(0.3_0.05_268)]", glow: "bg-[oklch(0.5_0.05_266/0.18)]", shadow: "shadow-[0_8px_20px_-8px_oklch(0.3_0.05_268/0.55)]" },
-  primary: { tile: "from-[oklch(0.74_0.16_155)] to-[oklch(0.56_0.12_192)]", glow: "bg-[oklch(0.75_0.15_160/0.35)]", shadow: "shadow-[0_8px_20px_-8px_oklch(0.6_0.15_165/0.7)]" },
+  primary: { tile: "from-(--brand-from) to-(--brand-to)", glow: "bg-(--glow)", shadow: "shadow-glow" },
   warning: { tile: "from-[oklch(0.86_0.15_85)] to-[oklch(0.72_0.17_55)]", glow: "bg-[oklch(0.85_0.15_80/0.4)]", shadow: "shadow-[0_8px_20px_-8px_oklch(0.75_0.17_65/0.7)]" },
   danger: { tile: "from-[oklch(0.72_0.18_15)] to-[oklch(0.58_0.21_355)]", glow: "bg-[oklch(0.72_0.18_15/0.3)]", shadow: "shadow-[0_8px_20px_-8px_oklch(0.62_0.2_10/0.7)]" },
   info: { tile: "from-[oklch(0.76_0.12_225)] to-[oklch(0.56_0.16_258)]", glow: "bg-[oklch(0.75_0.12_235/0.35)]", shadow: "shadow-[0_8px_20px_-8px_oklch(0.6_0.15_250/0.7)]" },
