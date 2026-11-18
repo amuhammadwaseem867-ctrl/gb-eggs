@@ -152,7 +152,10 @@ await step("void the expense (reversal entry)", async () => {
 await step("save attendance sheet", async () => {
   await page.goto(`${BASE}/employees?tab=attendance`);
   await page.getByRole("button", { name: "All present" }).click();
-  await page.getByRole("button", { name: "Save sheet" }).click();
+  const save = page.getByRole("button", { name: "Save sheet" });
+  // If today's sheet was already all present (seed data), change one employee so there is something to save.
+  if (await save.isDisabled()) await page.getByRole("radiogroup").first().locator('[role="radio"][aria-checked="false"]').first().click();
+  await save.click();
   await toast(/Attendance saved/);
 });
 

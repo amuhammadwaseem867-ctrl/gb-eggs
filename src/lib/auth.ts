@@ -26,17 +26,17 @@ export const getSession = cache(async (): Promise<Session | null> => {
   const userId = claimsData?.claims?.sub;
   if (!userId) return null;
 
-  const [{ data: profile }, { data: settings }] = await Promise.all([
+  // One database round trip: the permission matrix is tiny (roles x modules), so it is
+  // fetched alongside the profile instead of waiting for the role first.
+  const [{ data: profile }, { data: settings }, { data: matrix }] = await Promise.all([
     supabase.from("profiles").select("id, full_name, email, role_code, is_active").eq("id", userId).maybeSingle(),
     supabase.from("app_settings").select("*").eq("id", 1).maybeSingle(),
+    supabase.from("role_permissions").select("role_code, module, can_view, can_create, can_edit, can_delete"),
   ]);
   if (!profile) return null;
 
   const role = profile.role_code as RoleCode;
-  const { data: perms } = await supabase
-    .from("role_permissions")
-    .select("module, can_view, can_create, can_edit, can_delete")
-    .eq("role_code", role);
+  const perms = matrix?.filter((p) => p.role_code === role);
 
   const permissions = Object.fromEntries(
     MODULES.map((m) => {
